@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nós</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9f0f0;
+    color: #333;
+    text-align: center;
+    padding: 2rem;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  #contador {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #b33939;
+    font-weight: 600;
+  }
+  video {
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+  }
+  .frase {
+    font-size: 1.4rem;
+    font-style: italic;
+    color: #7f1d1d;
+  }
+</style>
+</head>
+<body>
+
+<h1>Eu penso em você há:</h1>
+<div id="contador">Carregando...</div>
+
+<video controls>
+  <source src="euiele.mp4" type="video/mp4" />
+  Seu navegador não suporta vídeo.
+</video>
+
+<div class="frase">Eu te amo, te vivo, te sinto e te preciso.</div>
+
+<script>
+  function atualizarContador() {
+    const inicio = new Date('2025-06-06T00:00:00');
+    const agora = new Date();
+
+    let diff = agora - inicio;
+
+    if(diff < 0) {
+      document.getElementById('contador').textContent = "Ainda não começou!";
+      return;
+    }
+
+    let anosDiff = agora.getFullYear() - inicio.getFullYear();
+    let mesesDiff = agora.getMonth() - inicio.getMonth();
+    let totalMeses = anosDiff * 12 + mesesDiff;
+
+    if (agora.getDate() < inicio.getDate()) {
+      totalMeses -= 1;
+    }
+
+    let dataMaisMeses = new Date(inicio);
+    dataMaisMeses.setMonth(dataMaisMeses.getMonth() + totalMeses);
+
+    let diffRestante = agora - dataMaisMeses;
+
+    let dias = Math.floor(diffRestante / (1000 * 60 * 60 * 24));
+    diffRestante -= dias * (1000 * 60 * 60 * 24);
+
+    let horas = Math.floor(diffRestante / (1000 * 60 * 60));
+    diffRestante -= horas * (1000 * 60 * 60);
+
+    let minutos = Math.floor(diffRestante / (1000 * 60));
+    diffRestante -= minutos * (1000 * 60);
+
+    let segundos = Math.floor(diffRestante / 1000);
+
+    document.getElementById('contador').textContent = 
+      `${totalMeses} meses, ${dias} dias, ${horas} horas, ${minutos} minutos, ${segundos} segundos`;
+  }
+
+  atualizarContador();
+  setInterval(atualizarContador, 1000);
+</script>
+
+</body>
+</html>
